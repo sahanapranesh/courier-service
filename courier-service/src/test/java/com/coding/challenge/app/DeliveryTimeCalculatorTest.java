@@ -1,5 +1,8 @@
 package com.coding.challenge.app;
 
+import com.coding.challenge.app.businesslogic.CourierServiceChargeCalculator;
+import com.coding.challenge.app.businesslogic.DeliveryTimeCalculator;
+import com.coding.challenge.app.businesslogic.ShipmentSelector;
 import com.coding.challenge.app.domain.*;
 import com.coding.challenge.app.exception.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +16,18 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DeliveryTimeCalculatorTest {
+public class DeliveryTimeCalculatorTest {
    private DeliveryTimeCalculator deliveryTimeCalculator;
+   private ShipmentSelector shipmentSelectorMock;
+   private CourierServiceChargeCalculator courierServiceChargeCalculatorMock;
+   private RequestValidator requestValidatorMock;
 
    @BeforeEach
    void setUp() {
-      deliveryTimeCalculator = new DeliveryTimeCalculator();
+      shipmentSelectorMock = new ShipmentSelector();
+      requestValidatorMock = new RequestValidator();
+      courierServiceChargeCalculatorMock = new CourierServiceChargeCalculator();
+      deliveryTimeCalculator = new DeliveryTimeCalculator(courierServiceChargeCalculatorMock, shipmentSelectorMock, requestValidatorMock);
    }
 
    @Test
@@ -34,11 +43,11 @@ class DeliveryTimeCalculatorTest {
       getRequestData(courierServiceRequestData, couriers);
       deliveryTimeCalculator.estimateDeliveryTime(courierServiceRequestData);
       assertEquals(couriers.stream().filter(courier -> courier.getPackageId().equals("pkg5")).findFirst().get()
-         .getDeliveredAt(), BigDecimal.valueOf(1.28));
+         .getEstimatedTimeOfArrival(), BigDecimal.valueOf(1.28));
       assertEquals(couriers.stream().filter(courier -> courier.getPackageId().equals("pkg1")).findFirst().get()
-         .getDeliveredAt(), BigDecimal.valueOf(5.82));
+         .getEstimatedTimeOfArrival(), BigDecimal.valueOf(5.82));
       assertEquals(couriers.stream().filter(courier -> courier.getPackageId().equals("pkg3")).findFirst().get()
-         .getDeliveredAt(), BigDecimal.valueOf(3.98));
+         .getEstimatedTimeOfArrival(), BigDecimal.valueOf(3.98));
    }
 
    private void getRequestData(CourierServiceRequestData courierServiceRequestData, List<Courier> couriers) {
@@ -49,16 +58,6 @@ class DeliveryTimeCalculatorTest {
       vehicleInfo.setVehicles(getVehiclesList());
       courierServiceRequestData.setVehicleInfo(vehicleInfo);
       courierServiceRequestData.setBaseCost(100.0);
-   }
-
-   @Test
-   void validateRequestData() {
-      CourierServiceRequestData courierServiceRequestData = new CourierServiceRequestData();
-      try {
-         deliveryTimeCalculator.estimateDeliveryTime(courierServiceRequestData);
-      } catch (BadRequestException e) {
-         e.printStackTrace();
-      }
    }
 
    @Test

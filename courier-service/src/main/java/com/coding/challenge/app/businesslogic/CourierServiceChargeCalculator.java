@@ -1,19 +1,22 @@
-package com.coding.challenge.app;
+package com.coding.challenge.app.businesslogic;
 
 import com.coding.challenge.app.domain.Courier;
 import com.coding.challenge.app.exception.BadRequestException;
 
 import java.math.BigDecimal;
 
+import static com.coding.challenge.app.utils.CourierServiceConstants.DISTANCE_MULTIPLIER;
+import static com.coding.challenge.app.utils.CourierServiceConstants.WEIGHT_MULTIPLIER;
+
 public class CourierServiceChargeCalculator {
 
-   public static Courier calculateCost(Double baseCost, Courier courier) throws BadRequestException {
+   public Courier calculateCost(Double baseCost, Courier courier) throws BadRequestException {
       double finalCost;
       double discount = 0.0;
-      if (courier.validateInput()) {
+      if (courier.hasValidInput()) {
          boolean doesOfferApply = courier.doesOfferCodeApply();
-         BigDecimal packageWeight = courier.getWeight().multiply(BigDecimal.valueOf(10.0));
-         BigDecimal distance = courier.getDistance().multiply(BigDecimal.valueOf(5));
+         BigDecimal packageWeight = courier.getWeight().multiply(BigDecimal.valueOf(WEIGHT_MULTIPLIER));
+         BigDecimal distance = courier.getDistance().multiply(BigDecimal.valueOf(DISTANCE_MULTIPLIER));
          finalCost = distance.doubleValue() + baseCost + packageWeight.doubleValue();
          if (doesOfferApply) {
             discount = finalCost * courier.getOfferCode().getPercentage() / 100.0;
@@ -31,4 +34,4 @@ public class CourierServiceChargeCalculator {
       return courier;
    }
 
-}
+   }

@@ -1,10 +1,12 @@
 package com.coding.challenge.app;
 
 
+import com.coding.challenge.app.businesslogic.CourierServiceChargeCalculator;
 import com.coding.challenge.app.domain.Courier;
 import com.coding.challenge.app.domain.OfferCode;
 import com.coding.challenge.app.exception.BadRequestException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,6 +17,12 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class CourierServiceChargeCalculatorTest {
+   private CourierServiceChargeCalculator courierServiceChargeCalculator;
+
+   @BeforeEach
+   void setUp() {
+      courierServiceChargeCalculator = new CourierServiceChargeCalculator();
+   }
 
    @ParameterizedTest
    @MethodSource("testWithMethodSource")
@@ -25,7 +33,7 @@ public class CourierServiceChargeCalculatorTest {
       courier.setDistance(new BigDecimal(distance));
       courier.setOfferCode(OfferCode.getValue(offerCode));
       try {
-         CourierServiceChargeCalculator.calculateCost(100.0, courier);
+         courierServiceChargeCalculator.calculateCost(100.0, courier);
          Assertions.assertEquals(Double.valueOf(expectedCost), courier.getTotalCost(), "Total cost should match");
       } catch (BadRequestException e) {
          System.out.println(e.getMessage());

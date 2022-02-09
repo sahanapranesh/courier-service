@@ -1,4 +1,4 @@
-package com.coding.challenge.app;
+package com.coding.challenge.app.businesslogic;
 
 import com.coding.challenge.app.domain.Courier;
 import com.coding.challenge.app.domain.Shipment;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ShipmentSelector {
 
-   public static void findSubsets(List<Courier> input, List<Courier> output,
+   public void findSubsets(List<Courier> input, List<Courier> output,
                                   int index, BigDecimal maxLoad, List<Shipment> possibleShipments) {
       if (index == input.size()) {
          findPossibleShipments(output, maxLoad, possibleShipments);
@@ -20,7 +20,7 @@ public class ShipmentSelector {
       findSubsets(input, new ArrayList<>(output), index + 1, maxLoad, possibleShipments);
    }
 
-   private static void findPossibleShipments(List<Courier> couriers, BigDecimal maxLoad, List<Shipment> possibleShipments) {
+   private void findPossibleShipments(List<Courier> couriers, BigDecimal maxLoad, List<Shipment> possibleShipments) {
       if (!couriers.isEmpty()) {
          BigDecimal subsetSum = BigDecimal.ZERO;
          for (Courier courier : couriers) {
@@ -32,7 +32,7 @@ public class ShipmentSelector {
       }
    }
 
-   private static void prepareShipment(List<Courier> output, BigDecimal subsetSum, List<Shipment> possibleShipments) {
+   private void prepareShipment(List<Courier> output, BigDecimal subsetSum, List<Shipment> possibleShipments) {
       Shipment shipment = new Shipment();
       shipment.setTotalWeight(subsetSum);
       shipment.setCouriers(output);

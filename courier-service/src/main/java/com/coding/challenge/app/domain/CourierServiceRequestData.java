@@ -1,7 +1,6 @@
 package com.coding.challenge.app.domain;
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -16,6 +15,7 @@ public class CourierServiceRequestData {
    }
 
    public boolean hasValidCouriers() {
-      return !couriers.isEmpty() && couriers.stream().allMatch(Courier::validateInput);
+      return !couriers.isEmpty() && couriers.stream().allMatch(Courier::hasValidInput);
    }
+
 }
