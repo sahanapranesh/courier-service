@@ -41,12 +41,16 @@ public class DeliveryTimeCalculator {
                BigDecimal maxTimeForDelivery = BigDecimal.ONE;
                vehicle = vehicleQueue.remove();
                maxTimeForDelivery = getMaxTimeForDelivery(courierServiceRequestData, shipment, vehicle, maxTimeForDelivery);
-               vehicle.setNextAvailableIn(vehicle.getNextAvailableIn().add(maxTimeForDelivery.multiply(BigDecimal.valueOf(2))));
+               vehicle.setNextAvailableIn(getAvailableIn(vehicle, maxTimeForDelivery));
                shipment.setVehicle(vehicle);
                vehicleQueue.add(vehicle);
             }
          }
       }
+   }
+
+   private BigDecimal getAvailableIn(Vehicle vehicle, BigDecimal maxTimeForDelivery) {
+      return vehicle.getNextAvailableIn().add(maxTimeForDelivery.multiply(BigDecimal.valueOf(2)));
    }
 
    private BigDecimal getMaxTimeForDelivery(CourierServiceRequestData courierServiceRequestData, Shipment shipment, Vehicle vehicle, BigDecimal maxTimeForDelivery)

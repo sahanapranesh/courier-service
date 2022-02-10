@@ -8,24 +8,36 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
 @Slf4j
+@SpringBootApplication
 public class CourierApplication {
-   @Autowired
-   private CouriersRequestProcessor couriersRequestProcessor;
-   @Value("${calculateCost}")
+   private static CouriersRequestProcessor couriersRequestProcessor;
    private static String calculateCost;
-   @Value("${calculateDeliveryTime}")
    private static String calculateDeliveryTime;
+
+   @Value("${calculateCost}")
+   public void setCalculateCost(String calculateCost) {
+      CourierApplication.calculateCost = calculateCost;
+   }
+
+   @Value("${calculateDeliveryTime}")
+   public void setCalculateDeliveryTime(String calculateDeliveryTime) {
+      CourierApplication.calculateDeliveryTime = calculateDeliveryTime;
+   }
+
+   @Autowired
+   public void setCouriersRequestProcessor(CouriersRequestProcessor couriersRequestProcessor) {
+      CourierApplication.couriersRequestProcessor = couriersRequestProcessor;
+   }
 
    public static void main(String[] args) {
       SpringApplication.run(CourierApplication.class, args);
       CourierServiceRequestData courierServiceRequestData = InputReader.readInput(args);
       if (Boolean.parseBoolean(calculateCost)) {
-         //couriersRequestProcessor.calculateDeliveryCost(courierServiceRequestData);
+         couriersRequestProcessor.calculateDeliveryCost(courierServiceRequestData);
       }
       if (Boolean.parseBoolean(calculateDeliveryTime)) {
-         //couriersRequestProcessor.calculateDeliveryTime(courierServiceRequestData);
+         couriersRequestProcessor.calculateDeliveryTime(courierServiceRequestData);
       }
    }
 }

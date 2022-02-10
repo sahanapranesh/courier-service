@@ -1,6 +1,8 @@
 package com.coding.challenge.app.domain;
 
 import lombok.Data;
+import org.springframework.util.CollectionUtils;
+
 import java.util.List;
 
 @Data
@@ -11,7 +13,7 @@ public class CourierServiceRequestData {
    private List<Courier> couriers;
 
    public boolean hasValidVehicleData() {
-      return vehicleInfo != null && vehicleInfo.getVehicles()!=null && !vehicleInfo.getVehicles().isEmpty();
+      return vehicleInfo != null && !CollectionUtils.isEmpty(vehicleInfo.getVehicles()) && vehicleInfo.isValid();
    }
 
    public boolean hasValidCouriers() {

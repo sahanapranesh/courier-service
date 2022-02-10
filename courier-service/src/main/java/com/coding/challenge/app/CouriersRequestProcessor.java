@@ -20,7 +20,7 @@ public class CouriersRequestProcessor {
          try {
             courierServiceChargeCalculator.calculateCost(courierServiceRequestData.getBaseCost(), courier);
          } catch (BadRequestException e) {
-            log.error(e.getMessage());
+            log.error("Error occurred while processing request " +e.getMessage());
          }
       });
    }
@@ -29,7 +29,7 @@ public class CouriersRequestProcessor {
       try {
          deliveryTimeCalculator.estimateDeliveryTime(courierServiceRequestData);
       } catch (BadRequestException e) {
-         log.error(e.getMessage());
+         log.error("Error occurred while processing request " +e.getMessage());
       }
    }
 

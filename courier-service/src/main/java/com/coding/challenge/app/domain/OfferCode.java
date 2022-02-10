@@ -1,10 +1,12 @@
 package com.coding.challenge.app.domain;
 
+import static com.coding.challenge.app.utils.CourierServiceConstants.*;
+
 public enum OfferCode {
-   OFR001(10.0),
-   OFR002(7.0),
-   OFR003(5.0),
-   NA(0.0);
+   OFR001(OFR1_DISCOUNT),
+   OFR002(OFR2_DISCOUNT),
+   OFR003(OFR3_DISCOUNT),
+   NA(NO_DISCOUNT);
 
    private final Double percentage;
 
@@ -23,4 +25,5 @@ public enum OfferCode {
          return NA;
       }
    }
+
 }
