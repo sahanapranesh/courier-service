@@ -3,8 +3,9 @@ package com.coding.challenge.app.config;
 import com.coding.challenge.app.CouriersRequestProcessor;
 import com.coding.challenge.app.businesslogic.CourierServiceChargeCalculator;
 import com.coding.challenge.app.businesslogic.DeliveryTimeCalculator;
-import com.coding.challenge.app.RequestValidator;
+import com.coding.challenge.app.businesslogic.OfferCodeApplier;
 import com.coding.challenge.app.businesslogic.ShipmentSelector;
+import com.coding.challenge.app.utils.RequestValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,8 +22,13 @@ public class ApplicationConfiguration {
    }
 
    @Bean
-   public CourierServiceChargeCalculator courierServiceChargeCalculator() {
-      return new CourierServiceChargeCalculator();
+   public OfferCodeApplier offerCodeApplier() {
+      return new OfferCodeApplier();
+   }
+
+   @Bean
+   public CourierServiceChargeCalculator courierServiceChargeCalculator(OfferCodeApplier offerCodeApplier) {
+      return new CourierServiceChargeCalculator(offerCodeApplier);
    }
 
    @Bean

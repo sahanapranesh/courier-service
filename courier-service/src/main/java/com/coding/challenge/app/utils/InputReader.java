@@ -1,6 +1,10 @@
 package com.coding.challenge.app.utils;
 
-import com.coding.challenge.app.domain.*;
+import com.coding.challenge.app.CourierServiceRequestData;
+import com.coding.challenge.app.domain.Courier;
+import com.coding.challenge.app.domain.OfferCode;
+import com.coding.challenge.app.domain.Vehicle;
+import com.coding.challenge.app.domain.VehicleInfo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -36,12 +40,12 @@ public class InputReader {
 
    private static VehicleInfo getVehicleInfo(String[] vehicle) {
       VehicleInfo info = new VehicleInfo();
-      info.setMaxSpeed(new BigDecimal(vehicle[1]));
-      info.setMaxLoad(new BigDecimal(vehicle[2]));
       List<Vehicle> vehicles = new ArrayList<>();
       int numberOfVehicles = Integer.parseInt(vehicle[0]);
       for (int j = 0; j < numberOfVehicles; j++) {
          Vehicle availableVehicle = new Vehicle();
+         availableVehicle.setMaxSpeed(new BigDecimal(vehicle[1]));
+         availableVehicle.setMaxLoad(new BigDecimal(vehicle[2]));
          availableVehicle.setNextAvailableIn(BigDecimal.ZERO);
          vehicles.add(availableVehicle);
       }

@@ -1,13 +1,12 @@
 package com.coding.challenge.app.businesslogic;
 
-import com.coding.challenge.app.RequestValidator;
+import com.coding.challenge.app.CourierServiceRequestData;
 import com.coding.challenge.app.domain.Courier;
-import com.coding.challenge.app.domain.CourierServiceRequestData;
 import com.coding.challenge.app.domain.Shipment;
 import com.coding.challenge.app.domain.Vehicle;
 import com.coding.challenge.app.exception.BadRequestException;
+import com.coding.challenge.app.utils.RequestValidator;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 @AllArgsConstructor
-@Slf4j
 public class DeliveryTimeCalculator {
    private CourierServiceChargeCalculator courierServiceChargeCalculator;
    private ShipmentSelector shipmentSelector;
@@ -27,7 +25,7 @@ public class DeliveryTimeCalculator {
       requestValidator.validateRequest(courierServiceRequestData);
 
       shipmentSelector.findSubsets(courierServiceRequestData.getCouriers(), new ArrayList<>(), 0,
-         courierServiceRequestData.getVehicleInfo().getMaxLoad(), possibleShipments);
+         courierServiceRequestData.getVehicleInfo().getVehicles().get(0).getMaxLoad(), possibleShipments);
 
       PriorityQueue<Shipment> shipmentQueue = new PriorityQueue<>(possibleShipments);
       Queue<Vehicle> vehicleQueue = new PriorityQueue<>();
@@ -68,7 +66,7 @@ public class DeliveryTimeCalculator {
    }
 
    private void printResult(Courier courier) {
-      log.info(courier.getPackageId() + " " + courier.getDiscount() + " " +
+      System.out.println(courier.getPackageId() + " " + courier.getDiscount() + " " +
          courier.getTotalCost() + " " + courier.getEstimatedTimeOfArrival());
    }
 }

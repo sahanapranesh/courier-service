@@ -14,16 +14,16 @@ public enum OfferCode {
       this.percentage = percentage;
    }
 
-   public Double getPercentage() {
-      return percentage;
-   }
-
    public static OfferCode getValue(String offerCode) {
       try {
          return OfferCode.valueOf(offerCode);
       } catch (Exception e) {
          return NA;
       }
+   }
+
+   public Double getPercentage() {
+      return percentage;
    }
 
 }

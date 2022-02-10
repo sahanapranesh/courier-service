@@ -1,12 +1,14 @@
 package com.coding.challenge.app.domain;
 
+import com.coding.challenge.app.CourierServiceRequestData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CourierServiceRequestDataTest {
    private CourierServiceRequestData courierServiceRequestData;
@@ -19,9 +21,10 @@ class CourierServiceRequestDataTest {
    @Test
    void hasValidVehicleData() {
       VehicleInfo vehicleInfo = new VehicleInfo();
-      vehicleInfo.setMaxLoad(BigDecimal.ZERO);
-      vehicleInfo.setMaxSpeed(BigDecimal.ZERO);
-      vehicleInfo.setVehicles(List.of(new Vehicle()));
+      Vehicle vehicle = new Vehicle();
+      vehicle.setMaxLoad(BigDecimal.ZERO);
+      vehicle.setMaxSpeed(BigDecimal.ZERO);
+      vehicleInfo.setVehicles(List.of(vehicle));
       courierServiceRequestData.setVehicleInfo(vehicleInfo);
       assertFalse(courierServiceRequestData.hasValidVehicleData());
    }
@@ -29,8 +32,6 @@ class CourierServiceRequestDataTest {
    @Test
    void hasValidVehicleDataWithMissingVehicles() {
       VehicleInfo vehicleInfo = new VehicleInfo();
-      vehicleInfo.setMaxLoad(BigDecimal.valueOf(78));
-      vehicleInfo.setMaxSpeed(BigDecimal.valueOf(200));
       courierServiceRequestData.setVehicleInfo(vehicleInfo);
       assertFalse(courierServiceRequestData.hasValidVehicleData());
    }

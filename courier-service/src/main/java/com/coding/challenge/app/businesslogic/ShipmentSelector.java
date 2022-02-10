@@ -10,7 +10,7 @@ import java.util.List;
 public class ShipmentSelector {
 
    public void findSubsets(List<Courier> input, List<Courier> output,
-                                  int index, BigDecimal maxLoad, List<Shipment> possibleShipments) {
+                           int index, BigDecimal maxLoad, List<Shipment> possibleShipments) {
       if (index == input.size()) {
          findPossibleShipments(output, maxLoad, possibleShipments);
          return;

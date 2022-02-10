@@ -1,6 +1,5 @@
-package com.coding.challenge.app;
+package com.coding.challenge.app.businesslogic;
 
-import com.coding.challenge.app.businesslogic.ShipmentSelector;
 import com.coding.challenge.app.domain.Courier;
 import com.coding.challenge.app.domain.Shipment;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ShipmentSelectorTest {
    private ShipmentSelector shipmentSelector = new ShipmentSelector();
 
+   private Courier getCourier(BigDecimal weight) {
+      Courier courier = new Courier();
+      courier.setWeight(weight);
+      return courier;
+   }
+
    @Test
    void testFindSubsets() {
       List<Courier> courierList = new ArrayList<>();
@@ -26,11 +31,5 @@ public class ShipmentSelectorTest {
       assertEquals(4, possibleShipments.size());
       assertTrue(possibleShipments.stream().anyMatch(shipment -> shipment.getTotalWeight().compareTo(BigDecimal.valueOf(125.0)) == 0));
       assertTrue(possibleShipments.stream().noneMatch(shipment -> shipment.getTotalWeight().compareTo(BigDecimal.valueOf(225.0)) == 0));
-   }
-
-   private Courier getCourier(BigDecimal weight) {
-      Courier courier = new Courier();
-      courier.setWeight(weight);
-      return courier;
    }
 }

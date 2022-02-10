@@ -3,7 +3,6 @@ package com.coding.challenge.app;
 import com.coding.challenge.app.businesslogic.CourierServiceChargeCalculator;
 import com.coding.challenge.app.businesslogic.DeliveryTimeCalculator;
 import com.coding.challenge.app.domain.Courier;
-import com.coding.challenge.app.domain.CourierServiceRequestData;
 import com.coding.challenge.app.domain.VehicleInfo;
 import com.coding.challenge.app.exception.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.*;

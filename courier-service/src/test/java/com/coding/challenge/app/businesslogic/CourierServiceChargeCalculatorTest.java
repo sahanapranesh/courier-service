@@ -1,7 +1,6 @@
-package com.coding.challenge.app;
+package com.coding.challenge.app.businesslogic;
 
 
-import com.coding.challenge.app.businesslogic.CourierServiceChargeCalculator;
 import com.coding.challenge.app.domain.Courier;
 import com.coding.challenge.app.domain.OfferCode;
 import com.coding.challenge.app.exception.BadRequestException;
@@ -18,11 +17,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class CourierServiceChargeCalculatorTest {
    private CourierServiceChargeCalculator courierServiceChargeCalculator;
-
-   @BeforeEach
-   void setUp() {
-      courierServiceChargeCalculator = new CourierServiceChargeCalculator();
-   }
+   private OfferCodeApplier offerCodeApplier;
 
    @ParameterizedTest
    @MethodSource("testWithMethodSource")
@@ -38,6 +33,12 @@ public class CourierServiceChargeCalculatorTest {
       } catch (BadRequestException e) {
          System.out.println(e.getMessage());
       }
+   }
+
+   @BeforeEach
+   void setUp() {
+      offerCodeApplier = new OfferCodeApplier();
+      courierServiceChargeCalculator = new CourierServiceChargeCalculator(offerCodeApplier);
    }
 
    static Stream<Arguments> testWithMethodSource() {

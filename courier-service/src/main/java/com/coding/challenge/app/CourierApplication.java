@@ -1,6 +1,5 @@
 package com.coding.challenge.app;
 
-import com.coding.challenge.app.domain.CourierServiceRequestData;
 import com.coding.challenge.app.utils.InputReader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,18 @@ public class CourierApplication {
    private static String calculateCost;
    private static String calculateDeliveryTime;
 
+   public static void main(String[] args) {
+      SpringApplication.run(CourierApplication.class, args);
+      CourierServiceRequestData courierServiceRequestData = InputReader.readInput(args);
+      boolean calculateCost = Boolean.parseBoolean(CourierApplication.calculateCost);
+      boolean calculateTime = Boolean.parseBoolean(calculateDeliveryTime);
+      if (calculateCost && calculateTime) {
+         couriersRequestProcessor.calculateDeliveryTime(courierServiceRequestData);
+      } else if (calculateCost) {
+         couriersRequestProcessor.calculateDeliveryCost(courierServiceRequestData);
+      }
+   }
+
    @Value("${calculateCost}")
    public void setCalculateCost(String calculateCost) {
       CourierApplication.calculateCost = calculateCost;
@@ -28,16 +39,5 @@ public class CourierApplication {
    @Autowired
    public void setCouriersRequestProcessor(CouriersRequestProcessor couriersRequestProcessor) {
       CourierApplication.couriersRequestProcessor = couriersRequestProcessor;
-   }
-
-   public static void main(String[] args) {
-      SpringApplication.run(CourierApplication.class, args);
-      CourierServiceRequestData courierServiceRequestData = InputReader.readInput(args);
-      if (Boolean.parseBoolean(calculateCost)) {
-         couriersRequestProcessor.calculateDeliveryCost(courierServiceRequestData);
-      }
-      if (Boolean.parseBoolean(calculateDeliveryTime)) {
-         couriersRequestProcessor.calculateDeliveryTime(courierServiceRequestData);
-      }
    }
 }

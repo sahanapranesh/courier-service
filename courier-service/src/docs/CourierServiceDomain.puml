@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+VehicleInfo *-- Vehicle
+Shipment *-- Courier
+Shipment --> Vehicle
+Courier --> OfferCode
+
+class Courier {
+String packageId
+BigDecimal weight
+BigDecimal distance
+OfferCode offerCode
+BigDecimal estimatedTimeOfArrival
+Double totalCost
+Double discount
+}
+
+class VehicleInfo {
+List<Vehicle> vehicles
+}
+
+class Vehicle {
+int vehicleId
+BigDecimal nextAvailableIn
+BigDecimal maxSpeed
+BigDecimal maxLoad
+}
+
+class Shipment{
+BigDecimal totalWeight
+List<Courier> couriers
+Vehicle vehicle
+}
+
+enum OfferCode {
+OFR001
+OFR002
+OFR003
+}
+
+@enduml

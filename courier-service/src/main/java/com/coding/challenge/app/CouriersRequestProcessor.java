@@ -3,7 +3,6 @@ package com.coding.challenge.app;
 
 import com.coding.challenge.app.businesslogic.CourierServiceChargeCalculator;
 import com.coding.challenge.app.businesslogic.DeliveryTimeCalculator;
-import com.coding.challenge.app.domain.CourierServiceRequestData;
 import com.coding.challenge.app.exception.BadRequestException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ public class CouriersRequestProcessor {
          try {
             courierServiceChargeCalculator.calculateCost(courierServiceRequestData.getBaseCost(), courier);
          } catch (BadRequestException e) {
-            log.error("Error occurred while processing request " +e.getMessage());
+            log.error("Error occurred while processing request " + e.getMessage());
          }
       });
    }
@@ -29,7 +28,7 @@ public class CouriersRequestProcessor {
       try {
          deliveryTimeCalculator.estimateDeliveryTime(courierServiceRequestData);
       } catch (BadRequestException e) {
-         log.error("Error occurred while processing request " +e.getMessage());
+         log.error("Error occurred while processing request " + e.getMessage());
       }
    }
 

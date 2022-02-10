@@ -16,37 +16,17 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class CourierTest {
    private Courier courier;
 
-   @BeforeEach
-   void setUp() {
-      courier = new Courier();
-   }
-
-   @ParameterizedTest
-   @MethodSource("offerCodeSource")
-   public void testCalculateCost(String weight, String distance, String offerCode, String packageId, boolean expectedResult) {
-      courier.setPackageId(packageId);
-      courier.setWeight(new BigDecimal(weight));
-      courier.setDistance(new BigDecimal(distance));
-      courier.setOfferCode(OfferCode.getValue(offerCode));
-      assertEquals(expectedResult, courier.doesOfferCodeApply());
-   }
-
-   static Stream<Arguments> offerCodeSource() {
-      return Stream.of(
-         arguments("5", "5", OfferCode.OFR001.name(), "pkg1", false),
-         arguments("15", "5", OfferCode.OFR002.name(), "pkg2", false),
-         arguments("10", "100", OfferCode.OFR003.name(), "pkg3", true),
-         arguments("140", "1200", "random", "pkg4", false)
-
-      );
-   }
-
    @ParameterizedTest
    @MethodSource("inputSource")
    public void testValidateInput(String weight, String distance, boolean expectedResult) {
       courier.setWeight(new BigDecimal(weight));
       courier.setDistance(new BigDecimal(distance));
       assertEquals(expectedResult, courier.hasValidInput());
+   }
+
+   @BeforeEach
+   void setUp() {
+      courier = new Courier();
    }
 
    static Stream<Arguments> inputSource() {
